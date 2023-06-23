@@ -1,4 +1,5 @@
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Link } from '@react-navigation/native';
 
 const baseUrl = "https://api.otaviolube.com";
 
@@ -9,8 +10,13 @@ export default function CardFilmes({ filme }){
     return (
         <View style ={styles.container}>
             <Image style ={styles.image} source={{ uri: baseUrl + filme.poster.data.attributes.formats.thumbnail.url}}/>
+
             <Text style ={styles.title}>{filme.titulo}</Text>
-            <Text style ={styles.sinopse}>{filme.sinopse}</Text>
+
+            <Text style ={styles.sinopse}>{filme.sinopse.length > 200 ? filme.sinopse.substring(0,200) + '...' : filme.sinopse}</Text>
+
+            <Link to={{screen: "DetailsPage", params: {filme: filme}}}>Saiba Mais...</Link>
+
             <TouchableOpacity style ={styles.button}>
                 <Text style ={styles.buttonText}>Comprar</Text>
             </TouchableOpacity>
@@ -19,7 +25,7 @@ export default function CardFilmes({ filme }){
 }
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'lime',
+        backgroundColor: 'blue',
         margin: 15,
         padding: 10,
         alignItems :'center',
@@ -40,14 +46,16 @@ const styles = StyleSheet.create({
     },
     sinopse: {
         marginBottom: 10,
+        textAlign: 'justify'
 
     },
     button: {
         height: 40,
         width: 120,
-        backgroundColor: 'red',
+        backgroundColor: 'green',
         alignItems :'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 20
     },
     buttonText: {
         fontSize: 20,
